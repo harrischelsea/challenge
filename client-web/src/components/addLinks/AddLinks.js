@@ -19,6 +19,7 @@ class AddLinks extends Component {
         const { link } = this.state;
         axios.post('/add-link', { link })
             .then(res => {
+                this.props.addLink({name: link});
                 this.setState({ success: true, link: '' });
             })
             .catch( err => this.setState({ success: false }));

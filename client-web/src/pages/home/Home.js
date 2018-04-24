@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCurrentUser } from "../../actions/userActions";
+import { getAllLinks, addLink } from '../../actions/linksActions';
+
 import {Grid, Container} from 'semantic-ui-react';
 import AddLinks from "../../components/addLinks/AddLinks";
 import AllLinks from "../../components/allLinks/AllLinks";
@@ -12,6 +14,7 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.getCurrentUser();
+        this.props.getAllLinks();
     }
 
     render() {
@@ -23,10 +26,10 @@ class Home extends Component {
                             <UserInfo user={this.props.user.user}/>
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={8} computer={6}>
-                            <AddLinks/>
+                            <AddLinks addLink={this.props.addLink}/>
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={8} computer={10}>
-                            <AllLinks/>
+                            <AllLinks links={this.props.links.links}/>
                         </Grid.Column>
                     </Grid>
                  </Container>
@@ -35,5 +38,5 @@ class Home extends Component {
     }
 }
 
-const mapStateToProps = ({ user }) => ({ user });
-export default connect(mapStateToProps, { getCurrentUser })(Home);
+const mapStateToProps = ({ user, links }) => ({ user, links });
+export default connect(mapStateToProps, { getCurrentUser, getAllLinks, addLink })(Home);

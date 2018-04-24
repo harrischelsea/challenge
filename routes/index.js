@@ -43,7 +43,6 @@ router.post('/add-link', function(req, res, next) {
 
     queries.getAllLinks()
         .then(links => {
-            console.log(links);
             let newLinks = links.map(el => el.name);
             for(let i=0; i<newLinks.length; i++){
                 let q = url.parse(newLinks[i], true);
@@ -59,7 +58,6 @@ router.post('/add-link', function(req, res, next) {
             console.log('ml', matchLink);
 
             if (matchLink) {
-                console.log(isEquivalent(matchLink.search, search));
                 if(isEquivalent(matchLink.search, search)){
                     console.log('link je isti');
                     let getLinkID = links.find(el => el.name === matchLink.name);

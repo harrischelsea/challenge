@@ -3,22 +3,6 @@ import { Header, Segment, List } from 'semantic-ui-react';
 import axios from 'axios';
 
 class AllLinks extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            links: [],
-            success: null,
-        }
-    }
-
-    componentDidMount() {
-        axios.get('/get-all-links')
-            .then(res => {
-                this.setState({links: res.data, success: true});
-            })
-            .catch( err => this.setState({ success: false }));
-    }
-
     render() {
         return (
             <div>
@@ -26,10 +10,10 @@ class AllLinks extends Component {
                     <Header as='h4' textAlign='center'>
                         All Links
                     </Header>
-                    {this.state.links
+                    {this.props.links
                         ?
                         <List>
-                        {this.state.links.map(el =>
+                        {this.props.links.map(el =>
                             <List.Item>{el.name}</List.Item>
                         )}
                         </List>
@@ -38,7 +22,6 @@ class AllLinks extends Component {
                     }
                 </Segment>
             </div>
-
         );
     }
 }
