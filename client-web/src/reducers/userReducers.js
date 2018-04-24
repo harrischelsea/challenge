@@ -8,12 +8,13 @@ import {
 const INITIAL_STATE = {
     loading: true,
     err: '',
+    success: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case GET_CURRENT_USER_SUCCESS:
-            return {...state, user: action.payload, loading: false };
+            return {...state, user: action.payload, loading: false, success: true };
         case GET_CURRENT_USER_PENDING:
             return {...state, loading: true };
         case GET_CURRENT_USER_FAILED:

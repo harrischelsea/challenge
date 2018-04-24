@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Link.associate = function(models) {
         models.Link.belongsToMany(models.User, {through: 'UserLink'});
+        models.Link.hasMany(models.Tag, { foreignKey: 'linkId'});
     };
 
     return Link;

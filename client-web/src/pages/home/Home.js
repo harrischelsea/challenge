@@ -9,6 +9,7 @@ import {Grid, Container} from 'semantic-ui-react';
 import AddLinks from "../../components/addLinks/AddLinks";
 import AllLinks from "../../components/allLinks/AllLinks";
 import UserInfo from "../../components/userInfo/UserInfo";
+import TextAnalysis from "../../components/textAnalysis/TextAnalysis";
 
 class Home extends Component {
 
@@ -18,6 +19,9 @@ class Home extends Component {
     }
 
     render() {
+        if (!localStorage.getItem('token')){
+            return <Redirect to='/login' />
+        }
         return (
             <div>
                  <Container>
@@ -30,6 +34,9 @@ class Home extends Component {
                         </Grid.Column>
                         <Grid.Column mobile={16} tablet={8} computer={10}>
                             <AllLinks links={this.props.links.links}/>
+                        </Grid.Column>
+                        <Grid.Column mobile={16} tablet={16} computer={16}>
+                            <TextAnalysis/>
                         </Grid.Column>
                     </Grid>
                  </Container>

@@ -4,6 +4,8 @@ const auth = require('../util/auth');
 const models = require('../models');
 var queries = require('../queries/queries');
 var url = require('url');
+var request = require('request');
+var cheerio = require('cheerio');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -111,6 +113,19 @@ router.get('/get-all-links', function(req, res, next) {
             res.send(link);
         }).catch(err => {
         res.status(400).send('err');
+    });
+});
+
+router.post('/text-analysis', function(req, res, next) {
+    let {link} = req.body;
+    console.log(link);
+
+    request(link, function (error, response, body) {
+        if (!error){
+            const $ = cheerio.load(body);
+            console.log(body);
+            res.send(body);
+        }
     });
 });
 

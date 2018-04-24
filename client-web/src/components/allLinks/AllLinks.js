@@ -18,7 +18,7 @@ class AllLinks extends Component {
                         )}
                         </List>
                         :
-                        ''
+                        <p>Empty!</p>
                     }
                 </Segment>
             </div>
