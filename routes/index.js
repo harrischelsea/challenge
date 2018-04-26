@@ -123,8 +123,10 @@ router.post('/text-analysis', function(req, res, next) {
     request(link, function (error, response, body) {
         if (!error){
             const $ = cheerio.load(body);
-            console.log(body);
-            res.send(body);
+            const text = $('.clanak_vijesti').text();
+            //console.log(x);
+            //console.log(body);
+            res.send(text);
         }
     });
 });
