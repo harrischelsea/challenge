@@ -118,25 +118,47 @@ router.get('/get-all-links', function(req, res, next) {
 
 router.post('/text-analysis', function(req, res, next) {
     let {link} = req.body;
-    console.log(link);
 
     request(link, function (error, response, body) {
         if (!error){
             const $ = cheerio.load(body);
             const text = $('.clanak_vijesti').text();
-            //console.log(x);
-            //console.log(body);
-            res.send(text);
+
+            res.send({text, words: findMostReaptedWord(text)});
         }
     });
 });
 
 module.exports = router;
 
+function findMostReaptedWord(str){
+    let obj = [];
+    let count = 0;
+
+    let words = str.match(/\w+/g);
+    let cleanWords = words.filter(el => el.length > 2 && el != 'jer');
+
+    for (let i = 0; i < cleanWords.length; i++){
+        count = 0;
+        for (let j = 0; j < cleanWords.length; j++){
+            if (cleanWords[i] === cleanWords[j]){
+                count++;
+            }
+        }
+        let find = obj.find(el => el.word === cleanWords[i]);
+        if(!find){
+            obj.push({word: cleanWords[i], count});
+        }
+    }
+
+    obj.sort(function(a,b) {return (a.count < b.count) ? 1 : ((b.count < a.count) ? -1 : 0);} );
+    return obj.slice(0, 10);
+}
+
 function isEquivalent(a, b) {
     // Create arrays of property names
-    var aProps = Object.getOwnPropertyNames(a);
-    var bProps = Object.getOwnPropertyNames(b);
+    let aProps = Object.getOwnPropertyNames(a);
+    let bProps = Object.getOwnPropertyNames(b);
 
     // If number of properties is different,
     // objects are not equivalent
@@ -144,8 +166,8 @@ function isEquivalent(a, b) {
         return false;
     }
 
-    for (var i = 0; i < aProps.length; i++) {
-        var propName = aProps[i];
+    for (let i = 0; i < aProps.length; i++) {
+        let propName = aProps[i];
 
         // If values of same property are not equal,
         // objects are not equivalent

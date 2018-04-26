@@ -9,6 +9,7 @@ class TextAnalysis extends Component {
             link: '',
             success: null,
             text: '',
+            words: [],
         }
     }
 
@@ -20,7 +21,7 @@ class TextAnalysis extends Component {
         const { link } = this.state;
         axios.post('/text-analysis', { link })
             .then(res => {
-                this.setState({ success: true, text: res.data });
+                this.setState({ success: true, text: res.data.text, words: res.data.words });
             })
             .catch( err => this.setState({ success: false }));
     };
@@ -30,7 +31,7 @@ class TextAnalysis extends Component {
             <div>
                 <Segment>
                     <Header as='h4' textAlign='center'>
-                        LINK ANALYSIS
+                        LINK ANALYSIS (only www.klix.ba/vijesti)
                     </Header>
                     <Form size='large'>
                         <Form.Input
@@ -48,7 +49,16 @@ class TextAnalysis extends Component {
                         >
                             Add LINK</Button>
                     </Form>
-                    <p>{this.state.text}</p>
+                    <p style={{padding: '20px'}}>
+                        {this.state.words
+                            ? this.state.words.map(el =>
+                                <div> {el.word} | {el.count} </div>
+                            )
+                            :
+                            ''
+                        }
+                    </p>
+                    <p style={{padding: '20px'}}>{this.state.text}</p>
                 </Segment>
             </div>
 
