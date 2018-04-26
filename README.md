@@ -1,0 +1,6 @@
+# challenge
+TECHNOLOGIES:
+NODE EXPRESS JS, REACT JS, REDUX, POSTGRESQL SEQUELIZE
+
+GIT CLONE
+RUN npm install in terminal
